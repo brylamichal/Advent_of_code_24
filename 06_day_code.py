@@ -13,6 +13,7 @@ for row in ar:
     input_lst.append(np.array([s for s in row]))
 
 ar = np.array(input_lst)
+ar_02 = ar.copy()
 
 print(ar)
 print(ar.shape)
@@ -81,7 +82,67 @@ dir_file_output = dir_name + '\\input\\06_day_output.txt'
 output = '\n'.join([''.join(row) for row in ar])
 print(output)
 
-with open(dir_file_output, "a") as f:
-    f.write(output)
+# with open(dir_file_output, "a") as f:
+#     f.write(output)
 
+
+def change_local_direction(d):
+    if d == "up":
+        return "right"
+    elif d == "right":
+        return "down"
+    elif d == "down":
+        return "left"
+    else:
+        return "up"
+
+
+i = list(start_point)
+ar_02[i[0]][i[1]] = "."
+
+CURR_DIRECTION_02 = "up"
+count_O = 0
+count_i = 0
+while check_boundary(i):
+    i[0] += direction[CURR_DIRECTION_02][0]
+    i[1] += direction[CURR_DIRECTION_02][1]
+    if not check_boundary(i):
+        break
+    if ar_02[i[0]][i[1]] == ".":
+        j = i.copy()
+        temp_ar_02 = ar_02.copy()
+        temp_ar_02[j[0]][j[1]] = "#"
+        j[0] -= direction[CURR_DIRECTION_02][0]
+        j[1] -= direction[CURR_DIRECTION_02][1]
+        temp_direction = change_local_direction(CURR_DIRECTION_02)
+        j[0] += direction[temp_direction][0]
+        j[1] += direction[temp_direction][1]
+        iteration = 0
+        while check_boundary(j):
+            iteration += 1
+            if iteration > 10**6:
+                print(f"stop_iteration on idx {i}")
+                count_i += 1
+                break
+            if j == [i[0]-direction[CURR_DIRECTION_02][0], i[1]-direction[CURR_DIRECTION_02][1]] and temp_direction == CURR_DIRECTION_02:
+                count_O += 1
+                break
+            if temp_ar_02[j[0]][j[1]] == ".":
+                j[0] += direction[temp_direction][0]
+                j[1] += direction[temp_direction][1]
+            else:
+                j[0] -= direction[temp_direction][0]
+                j[1] -= direction[temp_direction][1]
+                temp_direction = change_local_direction(temp_direction)
+                j[0] += direction[temp_direction][0]
+                j[1] += direction[temp_direction][1]
+
+    else:
+        i[0] -= direction[CURR_DIRECTION_02][0]
+        i[1] -= direction[CURR_DIRECTION_02][1]
+        CURR_DIRECTION_02 = change_local_direction(CURR_DIRECTION_02)
+
+print(count_O)
+print(count_i)
+print("done")
 

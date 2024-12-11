@@ -68,13 +68,13 @@ while check_boundary(i):
 print(i)
 print(count)
 
-count_x = 0
+result_o = 0
 for idx, val in np.ndenumerate(ar):
     if val == "X":
-        count_x += 1
+        result_o += 1
 
 print(ar)
-print(count_x)
+print(result_o)
 
 dir_file_output = dir_name + '\\input\\06_day_output.txt'
 
@@ -98,6 +98,7 @@ def change_local_direction(d):
 
 
 i = list(start_point)
+check_ar = ar_02.copy()
 ar_02[i[0]][i[1]] = "."
 
 CURR_DIRECTION_02 = "up"
@@ -109,24 +110,22 @@ while check_boundary(i):
     if not check_boundary(i):
         break
     if ar_02[i[0]][i[1]] == ".":
-        j = i.copy()
         temp_ar_02 = ar_02.copy()
-        temp_ar_02[j[0]][j[1]] = "#"
-        j[0] -= direction[CURR_DIRECTION_02][0]
-        j[1] -= direction[CURR_DIRECTION_02][1]
-        temp_direction = change_local_direction(CURR_DIRECTION_02)
-        j[0] += direction[temp_direction][0]
-        j[1] += direction[temp_direction][1]
+        temp_ar_02[i[0]][i[1]] = "#"
+        temp_direction = "up"
+        j = list(start_point)
         iteration = 0
         while check_boundary(j):
             iteration += 1
-            if iteration > 10**6:
-                print(f"stop_iteration on idx {i}")
+            if iteration > 2.5*10**4:
+                # print(f"stop_iteration on idx {i}")
                 count_i += 1
+                check_ar[i[0]][i[1]] = "O"
                 break
-            if j == [i[0]-direction[CURR_DIRECTION_02][0], i[1]-direction[CURR_DIRECTION_02][1]] and temp_direction == CURR_DIRECTION_02:
-                count_O += 1
-                break
+            # if j == [i[0]-direction[CURR_DIRECTION_02][0], i[1]-direction[CURR_DIRECTION_02][1]] and temp_direction == CURR_DIRECTION_02:
+            #     # print(f"find obstacle on idx {i}")
+            #     count_O += 1
+            #     break
             if temp_ar_02[j[0]][j[1]] == ".":
                 j[0] += direction[temp_direction][0]
                 j[1] += direction[temp_direction][1]
@@ -142,7 +141,16 @@ while check_boundary(i):
         i[1] -= direction[CURR_DIRECTION_02][1]
         CURR_DIRECTION_02 = change_local_direction(CURR_DIRECTION_02)
 
-print(count_O)
-print(count_i)
+print(f"obstacles - count_O = {count_O}")
+print(f"iteration loop - count_i = {count_i}")
+print(f"sum of two {count_O+count_i}")
 print("done")
 
+print(check_ar)
+
+result_o = 0
+for idx, val in np.ndenumerate(check_ar):
+    if val == "O":
+        result_o += 1
+
+print(f"FINAL RESULT IS {result_o}!!! After many hours - what a relief!!!")

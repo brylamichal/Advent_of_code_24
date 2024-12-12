@@ -300,3 +300,23 @@ import os
 # s2 = s1
 # s2 += "_XD"
 # print(f"s1 = {s1}\ns2 = {s2}")
+
+# old ide of day 07
+# final_lst = []
+# for el in lines:
+#     ind = [int(i) for i in el[1]]
+#     res = el[0]
+#     iterate = 0
+#     while iterate < 2**len(ind):
+#         temp_res = 0
+#         for i in ind:
+#             seed = random.randint(0, 2)
+#             if seed == 0:
+#                 temp_res += i
+#             elif seed == 1:
+#                 temp_res *= i
+#         if temp_res == res:
+#             final_lst.append(res)
+#             break
+#         else:
+#             iterate += 1

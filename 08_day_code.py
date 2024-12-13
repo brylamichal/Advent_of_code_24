@@ -67,10 +67,18 @@ print(anthens_hash)
 print("Anthens skipped:")
 print(anthens_skipped)
 
+
 count = 0
 for key in anthens_hash:
     count += len(anthens_hash[key])
+    for i in anthens_hash[key]:
+        ar_02[i[0]][i[1]] = "#"
 
 print(count) # 416 too high
 
+output = '\n'.join([''.join(row) for row in ar_02])
+print(output)
 
+# dir_file_output = dir_name + '\\input\\08_day_output.txt'
+# with open(dir_file_output, "a") as f:
+#     f.write(output)

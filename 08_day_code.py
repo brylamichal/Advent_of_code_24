@@ -59,7 +59,8 @@ for key in anthens:
         for j in range(len(anthens[key])):
             if i != j:
                 idx_hash = set_hash(idx_ref=anthens[key][i], idx_del=anthens[key][j])
-                cond = all([check_boundary(idx=idx_hash), not check_overlap(idx=idx_hash, key_to_skip=None, dict=anthens)])
+                cond = check_boundary(idx=idx_hash)
+                # cond = all([check_boundary(idx=idx_hash), not check_overlap(idx=idx_hash, key_to_skip=None, dict=anthens)])
                 anthens_hash[key].append(idx_hash) if cond else anthens_skipped[key].append(idx_hash)
 
 print("Anthens hashed:")
@@ -67,18 +68,22 @@ print(anthens_hash)
 print("Anthens skipped:")
 print(anthens_skipped)
 
-
-count = 0
 for key in anthens_hash:
-    count += len(anthens_hash[key])
     for i in anthens_hash[key]:
         ar_02[i[0]][i[1]] = "#"
-
-print(count) # 416 too high
 
 output = '\n'.join([''.join(row) for row in ar_02])
 print(output)
 
+answer = 0
+for idx, val in np.ndenumerate(ar_02):
+    if val == "#":
+        answer += 1
+
+print(answer)
+
 # dir_file_output = dir_name + '\\input\\08_day_output.txt'
 # with open(dir_file_output, "a") as f:
 #     f.write(output)
+
+

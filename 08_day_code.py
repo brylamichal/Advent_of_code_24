@@ -14,6 +14,7 @@ for row in ar:
 
 ar = np.array(input_lst)
 ar_02 = ar.copy()
+ar_03 = ar.copy()
 
 print(ar)
 print(ar.shape)
@@ -85,5 +86,40 @@ print(answer)
 # dir_file_output = dir_name + '\\input\\08_day_output.txt'
 # with open(dir_file_output, "a") as f:
 #     f.write(output)
+
+def set_ntime_hash(idx_ref, idx_del):
+    lst_hash = []
+    dx = idx_ref[0] - idx_del[0]
+    dy = idx_ref[1] - idx_del[1]
+    temp_idx = list(idx_ref)
+    while check_boundary(idx=temp_idx):
+        lst_hash.append(temp_idx.copy())
+        temp_idx[0] += dx
+        temp_idx[1] += dy
+    return lst_hash
+
+anthens_hash_ntime = {key:[] for key in anthens}
+for key in anthens:
+    for i in range(len(anthens[key])):
+        for j in range(len(anthens[key])):
+            if i != j:
+                idx_hash = set_ntime_hash(idx_ref=anthens[key][i], idx_del=anthens[key][j])
+                anthens_hash_ntime[key].extend(idx_hash)
+
+print(anthens_hash_ntime)
+for key in anthens_hash_ntime:
+    for i in anthens_hash_ntime[key]:
+        ar_03[i[0]][i[1]] = "#"
+
+output = '\n'.join([''.join(row) for row in ar_03])
+print(output)
+
+answer = 0
+
+for idx, val in np.ndenumerate(ar_03):
+    if val == "#":
+        answer += 1
+
+print(answer)
 
 

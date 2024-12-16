@@ -17,11 +17,6 @@ print(ar)
 
 BOUNDARY = [ar.shape[0]-1, ar.shape[1]-1]
 
-direction = {"up":      [-1, 0],
-             "right":   [0, 1],
-             "down":    [1, 0],
-             "left":    [0, -1]}
-
 class Trailhead:
     def __init__(self, pos_0, main_ar):
         self.pos_0 = pos_0
@@ -29,7 +24,9 @@ class Trailhead:
         self.achieved_top = []
 
         self.hike_top(pos=self.pos_0)
-        self.score = len(set(tuple(el) for el in self.achieved_top))
+        self.score_p1 = len(set(tuple(el) for el in self.achieved_top))
+        self.score_p2 = len(self.achieved_top)
+
     @staticmethod
     def check_boundary(pos):
         cond_row = 0 <= pos[0] <= BOUNDARY[0]
@@ -82,9 +79,15 @@ for idx, val in np.ndenumerate(ar):
     if val == 0:
         lst_Trailheads.append(Trailhead(pos_0=list(idx), main_ar=ar))
 
-answer = 0
+answer_p1 = 0
 for el in lst_Trailheads:
-    answer += el.score
+    answer_p1 += el.score_p1
 
-print(answer)
+print(answer_p1)
+
+answer_p2 = 0
+for el in lst_Trailheads:
+    answer_p2 += el.score_p2
+
+print(answer_p2)
 

@@ -38,6 +38,7 @@ class Stone:
 
     def recurrence_blinking(cls, n):
         if n > 0:
+            print(f"{cls.number}:{n}")
             temp_lst = []
             for el in cls.changed_stones:
                 if el == "0":
@@ -63,15 +64,26 @@ class Stone:
             n -= 1
 
 
-NUM_BLINKS = 25
-lst_stones = []
+# NUM_BLINKS = 25
+# lst_stones = []
+# for stone in input_lst:
+#     lst_stones.append(Stone(number=stone, blinks=NUM_BLINKS))
+#
+# answer = 0
+# for stone in lst_stones:
+#     answer += stone.count_stones
+#
+# print(answer)  # answer_part01 = 216042
+
+from collections import defaultdict
+
+stones = defaultdict(int)
+
+print(stones)
+
 for stone in input_lst:
-    lst_stones.append(Stone(number=stone, blinks=NUM_BLINKS))
-
-answer = 0
-for stone in lst_stones:
-    answer += stone.count_stones
-
-print(answer)  # answer_part01 = 216042
+    stones[int(stone)] += 1
 
 
+
+print(stones)
